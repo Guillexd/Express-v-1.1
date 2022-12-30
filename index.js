@@ -39,16 +39,35 @@ class ProductManager {
     const db = await this.getProducts();
     try {
       const prod = db.find(el => el.id === id);
-      return prod ? prod : "Not found";
+      return prod ? prod : null;
     } catch (error) {
       console.log(error);
     }
   }
+
+  async updateProductById(id, prop){
+    const db = await this.getProducts();
+    try {
+      let newProduct = await this.getProductById(id);
+      if(newProduct){
+        newProduct = {...newProduct, ...prop}
+        const newdb = db.map(el=>{
+          if(el.id==newProduct.id){
+            el=newProduct;
+          }
+          return el;
+        })
+        await this.#add(newdb);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async deleteProductById(id){
     const db = await this.getProducts();
     try {
       const newProducts = db.filter(el => el.id !== id);
-      console.log(newProducts);
       await this.#add(newProducts);
     } catch (error) {
       console.log(error);
@@ -89,9 +108,24 @@ class ProductManager {
   }
 }
 
-const xd = new ProductManager('./db.json');
-xd.addProduct("Piña","Piña calidad-precio", 1.1,"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000", 2, 100);
-// xd.getProducts().then(el=>console.log(el));
-// xd.getProductById(1).then(el=>console.log(el));
-// xd.deleteProductById(0);
-// xd.deleteAllProducts()
+const producto = new ProductManager('./db.json');
+//esto se ve reflejado en el db.json xd
+function ejecutar(){
+  setTimeout(() => {
+    producto.addProduct("Piña","Piña calidad-precio", 1.1,"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000", 2, 100);
+  }, 0000);
+  setTimeout(() => {
+    producto.addProduct("Fresa","Fresa calidad-precio", 1.1,"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000", 3, 200);
+  }, 1000);
+  setTimeout(() => {
+    producto.deleteProductById(1);
+  }, 2000);
+  setTimeout(() => {
+    producto.updateProductById(2, {price: 4.5})
+  }, 3000);
+  setTimeout(() => {
+    producto.deleteAllProducts()
+  }, 4000);
+}
+
+ejecutar();
