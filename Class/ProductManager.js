@@ -1,6 +1,7 @@
-const fs = require('fs');
+// const fs = require('fs');
+import fs from 'fs';
 
-class ProductManager {
+export class ProductManager {
 
   constructor(path){
     this.path=path;
@@ -30,15 +31,22 @@ class ProductManager {
     }
   }
 
-  async getProducts(){
-    const db = await this.#searchDB();
-    return db;
+  async getProducts(limit){
+    try {
+      const db = await this.#searchDB();
+      if(limit==='max'){
+        return db;
+      }
+      return db.slice(0, limit);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async getProductById(id){
-    const db = await this.getProducts();
     try {
-      const prod = db.find(el => el.id === id);
+      const db = await this.#searchDB();
+      const prod = db.find(el => el.id === parseInt(id));
       return prod ? prod : null;
     } catch (error) {
       console.log(error);
@@ -46,7 +54,7 @@ class ProductManager {
   }
 
   async updateProductById(id, prop){
-    const db = await this.getProducts();
+    const db = await this.#searchDB();
     try {
       let newProduct = await this.getProductById(id);
       if(newProduct){
@@ -65,7 +73,7 @@ class ProductManager {
   }
 
   async deleteProductById(id){
-    const db = await this.getProducts();
+    const db = await this.#searchDB();
     try {
       const newProducts = db.filter(el => el.id !== id);
       await this.#add(newProducts);
@@ -108,24 +116,4 @@ class ProductManager {
   }
 }
 
-const producto = new ProductManager('./db.json');
-//esto se ve reflejado en el db.json xd
-function ejecutar(){
-  setTimeout(() => {
-    producto.addProduct("Piña","Piña calidad-precio", 1.1,"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000", 2, 100);
-  }, 0000);
-  setTimeout(() => {
-    producto.addProduct("Fresa","Fresa calidad-precio", 1.1,"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000", 3, 200);
-  }, 1000);
-  setTimeout(() => {
-    producto.deleteProductById(1);
-  }, 2000);
-  setTimeout(() => {
-    producto.updateProductById(2, {price: 4.5})
-  }, 3000);
-  setTimeout(() => {
-    producto.deleteAllProducts()
-  }, 4000);
-}
-
-ejecutar();
+// module.exports.ProductManager = ProductManager;
