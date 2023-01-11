@@ -1,1 +1,30 @@
-[{"id":2,"title":"Fresa","des":"Fresa calidad-precio","price":4.5,"thumbnail":"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000","code":3,"stock":200},{"id":3,"title":"Piña","des":"Piña calidad-precio","price":1.1,"thumbnail":"https://www.lechepuleva.es/documents/13930/203222/pi%C3%B1a_g.jpg/c585227d-e694-464d-87d7-3f2143dd33d9?t=1423480442000","code":2,"stock":100}]
+[
+    {
+        "id": 1,
+        "title": "Agua",
+        "des": "Agua calida-precio",
+        "price": 5.5,
+        "thumbnail": "image.png",
+        "code": 4,
+        "stock": 100,
+        "ola": "adios"
+    },
+    {
+        "id": 2,
+        "title": "Agua",
+        "des": "Agua calida-precio",
+        "price": 5.5,
+        "thumbnail": "image.png",
+        "code": 1,
+        "stock": 10
+    },
+    {
+        "id": 3,
+        "title": "Agua",
+        "des": "Agua calida-precio",
+        "price": 5.5,
+        "thumbnail": "image.png",
+        "code": 2,
+        "stock": 10
+    }
+]

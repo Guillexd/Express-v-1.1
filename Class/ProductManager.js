@@ -7,7 +7,9 @@ export class ProductManager {
     this.path=path;
   }
 
-  async addProduct(title, des, price, thumbnail, code, stock){
+  async addProduct(obj){
+
+    const { title, des, price, thumbnail, code, stock } = obj;
 
     const product = {
       id: await this.#idGenerator(),
@@ -18,16 +20,17 @@ export class ProductManager {
       code,
       stock
     }
+    console.log(product);
     const verFirst = product[Object.keys(product)[Object.keys(product).length - 1]] !== undefined;
     const verSecond = await this.#findCode(product.code) ? false : true;
     try {
-      if (verFirst && verSecond){
-        let db = await this.#searchDB();
-        db.push(product);
-        await this.#add(db);
-      }
+      if (!(verFirst && verSecond)) return false;
+      let db = await this.#searchDB();
+      db.push(product);
+      await this.#add(db);
+      return product;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -39,7 +42,7 @@ export class ProductManager {
       }
       return db.slice(0, limit);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -47,9 +50,10 @@ export class ProductManager {
     try {
       const db = await this.#searchDB();
       const prod = db.find(el => el.id === parseInt(id));
-      return prod ? prod : null;
+      if(!prod) return false;
+      return prod ;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -57,18 +61,18 @@ export class ProductManager {
     const db = await this.#searchDB();
     try {
       let newProduct = await this.getProductById(id);
-      if(newProduct){
-        newProduct = {...newProduct, ...prop}
-        const newdb = db.map(el=>{
-          if(el.id==newProduct.id){
-            el=newProduct;
-          }
-          return el;
-        })
-        await this.#add(newdb);
-      }
+      if(!newProduct) return false;
+      newProduct = {...newProduct, ...prop}
+      const newdb = db.map(el=>{
+        if(el.id==newProduct.id){
+          el=newProduct;
+        }
+        return el;
+      })
+      await this.#add(newdb);
+      return newProduct;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
@@ -78,7 +82,7 @@ export class ProductManager {
       const newProducts = db.filter(el => el.id !== id);
       await this.#add(newProducts);
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }
 
