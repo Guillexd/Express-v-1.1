@@ -8,12 +8,16 @@ const productManager = new ProductManager('../DataBase/db.json');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-//routes
+//Routers
+const RouterProducts = express.Router();
+app.use('/products', RouterProducts);
+
+//routing
 app.get('/', async(req, res)=>{
     res.send(`<h1 style='color: salmon; display: grid; place-content: center'>Listening through PORT: ${PORT}</h1>`);
 })
 
-app.get('/products', async(req, res)=>{
+RouterProducts.get('/', async(req, res)=>{
     const { limit } = req.query;
     const evento = await productManager.getProducts(limit || 'max');
     if(evento){
@@ -23,7 +27,7 @@ app.get('/products', async(req, res)=>{
     }
 })
 
-app.get('/products/:pId', async(req, res)=>{
+RouterProducts.get('/:pId', async(req, res)=>{
     const { pId } = req.params;
     const evento = await productManager.getProductById(pId);
     if(evento){
@@ -33,7 +37,7 @@ app.get('/products/:pId', async(req, res)=>{
     }
 })
 
-app.post('/products', async(req, res)=>{
+RouterProducts.post('/', async(req, res)=>{
     const obj = req.body;
     const user = await productManager.addProduct(obj);
     if(user){
@@ -43,7 +47,7 @@ app.post('/products', async(req, res)=>{
     }
 })
 
-app.put('/products/:idProduct', async(req, res)=>{
+RouterProducts.put('/:idProduct', async(req, res)=>{
     const { idProduct } = req.params;
     const obj = req.body;
     const product = await productManager.updateProductById(parseInt(idProduct), obj);
@@ -54,7 +58,12 @@ app.put('/products/:idProduct', async(req, res)=>{
     }
 })
 
-app.delete('/products/:idProduct',async(req,res)=>{
+RouterProducts.delete('/',async(req,res)=>{
+    productManager.deleteAllProducts();
+    res.json({message:`Products were deleted succesfully`});
+})
+
+RouterProducts.delete('/:idProduct',async(req,res)=>{
     const { idProduct } = req.params;
     productManager.deleteProductById(parseInt(idProduct));
     res.json({message:`Product was deleted succesfully`});
