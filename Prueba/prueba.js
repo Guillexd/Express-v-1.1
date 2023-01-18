@@ -18,5 +18,3 @@ function ejecutar() {
     producto.updateProductById(2, { price: 4.5 })
   }, 3000);
 }
-
-ejecutar(); 

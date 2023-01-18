@@ -9,7 +9,7 @@ export class ProductManager {
 
   async addProduct(obj){
 
-    const { title, des, price, thumbnail, code, stock } = obj;
+    const { title, des, price, thumbnail, code, stock, category, status } = obj;
 
     const product = {
       id: await this.#idGenerator(),
@@ -18,19 +18,25 @@ export class ProductManager {
       price,
       thumbnail,
       code,
-      stock
+      stock,
+      category,
+      status: true
     }
     console.log(product);
-    const verFirst = product[Object.keys(product)[Object.keys(product).length - 1]] !== undefined;
+    let verFirst=true;
+    if(title == undefined || des == undefined || price == undefined || code == undefined || category == undefined || stock == undefined){
+      verFirst=false;
+    }
+  
     const verSecond = await this.#findCode(product.code) ? false : true;
     try {
       if (!(verFirst && verSecond)) return false;
-      let db = await this.#searchDB();
+      const db = await this.#searchDB();
       db.push(product);
       await this.#add(db);
       return product;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -42,7 +48,7 @@ export class ProductManager {
       }
       return db.slice(0, limit);
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -53,7 +59,7 @@ export class ProductManager {
       if(!prod) return false;
       return prod ;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -72,7 +78,7 @@ export class ProductManager {
       await this.#add(newdb);
       return newProduct;
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 
@@ -82,7 +88,7 @@ export class ProductManager {
       const newProducts = db.filter(el => el.id !== id);
       await this.#add(newProducts);
     } catch (error) {
-      return error;
+      console.log(error);
     }
   }
 

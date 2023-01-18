@@ -5,26 +5,9 @@
         "des": "Agua calida-precio",
         "price": 5.5,
         "thumbnail": "image.png",
-        "code": 4,
-        "stock": 100,
-        "ola": "adios"
-    },
-    {
-        "id": 2,
-        "title": "Agua",
-        "des": "Agua calida-precio",
-        "price": 5.5,
-        "thumbnail": "image.png",
-        "code": 1,
-        "stock": 10
-    },
-    {
-        "id": 3,
-        "title": "Agua",
-        "des": "Agua calida-precio",
-        "price": 5.5,
-        "thumbnail": "image.png",
         "code": 2,
-        "stock": 10
+        "stock": 100,
+        "category":"bebidas",
+        "status": true
     }
 ]
