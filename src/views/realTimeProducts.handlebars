@@ -1,5 +1,5 @@
 <h1 class="text-center">Formulario</h1>
-<form class="container mt-5" id="form__products">
+<form class="container mt-5" id="form__products" method="post">
   <div class="input-group mb-3">
     <span class="input-group-text" id="title">Title</span>
     <input type="text" class="form-control" placeholder="Title" aria-label="Title" name="title">
@@ -62,21 +62,8 @@
       <th scope="col">X</th>
     </tr>
   </thead>
-  <tbody>
-    {{#each products}}
-    <tr>
-      <th scope="row">{{id}}</th>
-      <td>{{title}}</td>
-      <td>{{des}}</td>
-      <td>{{price}}</td>
-      <td>{{code}}</td>
-      <td>{{stock}}</td>
-      <td>{{category}}</td>
-      <td>{{thumbnail}}</td>
-      <td>{{status}}</td>
-      <td><button class="btn btn-secondary">Delete</button></td>
-    </tr>
-    {{/each}}
+  <tbody id="container__products">
+    
   </tbody>
 </table>
 
