@@ -1,7 +1,7 @@
 <h1 class="text-center">Formulario</h1>
-<form class="container mt-5" action="/api/products" method="post">
+<form class="container mt-5" id="form__products">
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Title</span>
+    <span class="input-group-text" id="title">Title</span>
     <input type="text" class="form-control" placeholder="Title" aria-label="Title" name="title">
   </div>
   
@@ -11,32 +11,32 @@
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Price</span>
+    <span class="input-group-text" id="basic-addon2">Price</span>
     <input type="text" class="form-control" placeholder="Price" aria-label="Price" name="price">
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Code</span>
+    <span class="input-group-text" id="basic-addon3">Code</span>
     <input type="text" class="form-control" placeholder="Code" aria-label="Code" name="code">
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Stock</span>
+    <span class="input-group-text" id="basic-addon4">Stock</span>
     <input type="text" class="form-control" placeholder="Stock" aria-label="Stock" name="stock">
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Category</span>
+    <span class="input-group-text" id="basic-addon5">Category</span>
     <input type="text" class="form-control" placeholder="Category" aria-label="Category" name="category">
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Thumbnail</span>
+    <span class="input-group-text" id="basic-addon6">Thumbnail</span>
     <input type="text" class="form-control" placeholder="Thumbnail" aria-label="Thumbnail" name="thumbnail">
   </div>
 
   <div class="input-group mb-3">
-    <span class="input-group-text" id="basic-addon1">Status</span>
+    <span class="input-group-text" id="basic-addon7">Status</span>
     <input type="text" class="form-control" placeholder="Status" aria-label="Status" name="status">
   </div>
 
@@ -44,6 +44,41 @@
     <button class="btn btn-primary" type="submit">Send</button>
   </div>
 </form>
+
+<hr>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Price</th>
+      <th scope="col">Code</th>
+      <th scope="col">Stock</th>
+      <th scope="col">Category</th>
+      <th scope="col">Thumbnail</th>
+      <th scope="col">Status</th>
+      <th scope="col">X</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each products}}
+    <tr>
+      <th scope="row">{{id}}</th>
+      <td>{{title}}</td>
+      <td>{{des}}</td>
+      <td>{{price}}</td>
+      <td>{{code}}</td>
+      <td>{{stock}}</td>
+      <td>{{category}}</td>
+      <td>{{thumbnail}}</td>
+      <td>{{status}}</td>
+      <td><button class="btn btn-secondary">Delete</button></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/products.js"></script>
