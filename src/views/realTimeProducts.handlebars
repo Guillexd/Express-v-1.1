@@ -63,7 +63,23 @@
     </tr>
   </thead>
   <tbody id="container__products">
-    
+    {{#if products}}
+    {{#each products}}
+        <tr name={{id}}>
+          <th scope="row">{{id}}</th>
+          <td>{{title}}</td>
+          <td>{{des}}</td>
+          <td>{{price}}</td>
+          <td>{{code}}</td>
+          <td>{{stock}}</td>
+          <td>{{category}}</td>
+          <td>{{thumbnail}}</td>
+          <td>{{status}}</td>
+          <td><button class="btn btn-secondary btn__delete">Delete</button></td>
+        </tr>
+        
+    {{/each}}
+    {{/if}}
   </tbody>
 </table>
 

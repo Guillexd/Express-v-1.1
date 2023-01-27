@@ -27,20 +27,38 @@ $form__products.addEventListener('submit', (e)=>{
     socket.emit('addProducts', obj)
 })
 
-socket.on('show_products', (products)=>{
-    products.forEach(element => {
-        $container__products.innerHTML += 
-        `<tr>
-        <th scope="row">xd</th>
-        <td>{{title}}</td>
-        <td>{{des}}</td>
-        <td>{{price}}</td>
-        <td>{{code}}</td>
-        <td>{{stock}}</td>
-        <td>{{category}}</td>
-        <td>{{thumbnail}}</td>
-        <td>{{status}}</td>
-        <td><button></button></td>
-        </tr>`
-    });
+socket.on('show_products', (product)=>{
+    console.log("REcibi in show_products");
+    console.log(product);
+    const tr = document.createElement('tr');
+    if (product){
+        tr.setAttribute("name", product.id);
+        tr.innerHTML = 
+        `
+        <th scope="row">${product.id}</th>
+        <td>${product.title}</td>
+        <td>${product.des}</td>
+        <td>${product.price}</td>
+        <td>${product.code}</td>
+        <td>${product.stock}</td>
+        <td>${product.category}</td>
+        <td>${product.thumbnail}</td>
+        <td>${product.status}</td>
+        <td><button class="btn btn-secondary btn__delete">Delete</button></td>
+        `;
+
+        $container__products.appendChild(tr)
+    }
+})
+
+socket.on('product__deleted', (id)=>{
+    const tr = document.querySelector(`tr[name="${id}"]`);
+    $container__products.removeChild(tr);
+})
+
+document.addEventListener('click', (e)=>{
+    if(e.target.matches('.btn__delete')){
+        const id = e.target.closest('tr').firstElementChild.textContent;
+        socket.emit('delete__product', id)
+    }
 })

@@ -40,16 +40,6 @@ const httpServer = app.listen(PORT, ()=>{
 //socket back-end
 export const socketServer = new Server(httpServer);
 
-socketServer.of("/realtimeproducts").on("connection", (socket) => {
-  socket.on('addProducts', async(obj)=>{
-    let db = await fs.promises.readFile('../DataBase/db.json', 'utf-8');
-    db = JSON.parse(db);
-    db.push(obj)
-    await fs.promises.writeFile('../DataBase/db.json', JSON.stringify(db));
-    socket.emit('show_products', db)
-  })
-});
-
 socketServer.on('connection', (socket)=>{
   console.log(`connected by ${socket.id}`);
   socket.on('disconnect', ()=>{
