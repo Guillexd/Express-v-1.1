@@ -9,26 +9,26 @@ export class ProductManager {
 
   async addProduct(obj){
 
-    const { title, des, price, thumbnail, code, stock, category, status } = obj;
+    const { title, des, price, code, stock, category, thumbnail, status } = obj;
 
     const product = {
       id: await this.#idGenerator(),
       title,
       des,
       price,
-      thumbnail,
       code,
       stock,
       category,
-      status: true
+      thumbnail,
+      status: status || true
     }
-    console.log(product);
+
     let verFirst=true;
     if(title == undefined || des == undefined || price == undefined || code == undefined || category == undefined || stock == undefined){
       verFirst=false;
     }
-  
     const verSecond = await this.#findCode(product.code) ? false : true;
+
     try {
       if (!(verFirst && verSecond)) return false;
       const db = await this.#searchDB();

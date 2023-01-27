@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { CartManager } from "../Class/CartManager.js";
+import { CartManager } from "../../Class/CartManager.js";
 
 const cartManager = new CartManager('../Database/cart.json');
 const RouterCarts = Router();
@@ -8,7 +8,7 @@ RouterCarts.get('/:cId', async(req, res)=>{
   const { cId } = req.params;
   const cart = await cartManager.getCartByID(cId);
   if(cart){
-    res.status(200).json(cart);
+    res.status(200).render('index', {cart});
   } else {
     res.status(404).json({message: "No Carts"});
   }
