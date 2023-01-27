@@ -11,6 +11,10 @@ export class ProductManager {
 
     const { title, des, price, code, stock, category, thumbnail, status } = obj;
 
+    let verFirst=true;
+    if(title.length === 0 || des.length === 0 || price.length === 0 || code.length === 0 || category.length === 0 || stock.length === 0){
+      verFirst=false;
+    }
     const product = {
       id: await this.#idGenerator(),
       title,
@@ -23,10 +27,6 @@ export class ProductManager {
       status: status || true
     }
 
-    let verFirst=true;
-    if(title == undefined || des == undefined || price == undefined || code == undefined || category == undefined || stock == undefined){
-      verFirst=false;
-    }
     const verSecond = await this.#findCode(product.code) ? false : true;
 
     try {
