@@ -1,5 +1,5 @@
 //socket front-end
-const socket = io('/realtimeproducts');
+const socket = io();
 
 //values
 const $form__products = document.querySelector('#form__products'),
@@ -28,8 +28,6 @@ $form__products.addEventListener('submit', (e)=>{
 })
 
 socket.on('show_products', (product)=>{
-    console.log("REcibi in show_products");
-    console.log(product);
     const tr = document.createElement('tr');
     if (product){
         tr.setAttribute("name", product.id);
@@ -49,16 +47,16 @@ socket.on('show_products', (product)=>{
 
         $container__products.appendChild(tr)
     }
+}
+)
+document.addEventListener('click', (e)=>{
+    if(e.target.matches('.btn__delete')){
+        const id = e.target.closest('tr').firstElementChild.textContent;
+        socket.emit('delete__product', id);
+    }
 })
 
 socket.on('product__deleted', (id)=>{
     const tr = document.querySelector(`tr[name="${id}"]`);
     $container__products.removeChild(tr);
-})
-
-document.addEventListener('click', (e)=>{
-    if(e.target.matches('.btn__delete')){
-        const id = e.target.closest('tr').firstElementChild.textContent;
-        socket.emit('delete__product', id)
-    }
 })

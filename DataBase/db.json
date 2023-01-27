@@ -1,1 +1,13 @@
-[{"id":1,"title":"Agua","des":"Agua calida-precio","price":5.5,"code":2,"stock":100,"category":"bebidas","thumbnail":"image.png","status":true},{"id":2,"title":"","des":"","price":"","code":"adad","stock":"","category":"","thumbnail":"","status":true}]
+[
+    {
+        "id": 1,
+        "title": "Agua",
+        "des": "Agua calida-precio",
+        "price": 5.5,
+        "code": 2,
+        "stock": 100,
+        "category": "bebidas",
+        "thumbnail": "image.png",
+        "status": true
+    }
+]
